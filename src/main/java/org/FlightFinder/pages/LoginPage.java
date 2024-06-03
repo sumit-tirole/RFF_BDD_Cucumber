@@ -19,17 +19,7 @@ public class LoginPage {
         PageFactory.initElements(driver, this);
     }
 
-    public void synchronised(By locator, WebElement element)  {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
-        wait.until(ExpectedConditions.elementToBeClickable(element));
-        wait.until(ExpectedConditions.presenceOfElementLocated(locator));
-        try {
-            Thread.sleep(2000); }
-        catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
+
 
     @FindBy(xpath="//button[text()='I agree']")
     WebElement acceptCookies;
@@ -54,37 +44,37 @@ public class LoginPage {
 
 
     public WebElement getAcceptCookies() {
-        synchronised(By.xpath("//button[text()='I agree']"),acceptCookies);
+
         return acceptCookies;
     }
 
     public WebElement getSignInLink() {
-        synchronised(By.xpath("//button[text()='Sign In']"),signInLink);
+
         return signInLink;
     }
 
     public WebElement getEmailTextField() {
-        synchronised(By.xpath("//input[@name='email']"),emailTextField);
+
         return emailTextField;
     }
 
     public WebElement getPasswordTextField() {
-        synchronised(By.xpath("//input[@name='password']"),passwordTextField);
+
         return passwordTextField;
     }
 
     public WebElement getSignInButton() {
-        synchronised(By.xpath("//div[@class='column']/button[text()='Sign In']"),signInButton);
+
         return signInButton;
     }
 
     public WebElement getAccountButton() {
-        synchronised(By.xpath("(//div[@role='listbox'])[2]"),accountButton);
+
         return accountButton;
     }
 
     public WebElement getLogoutButton() {
-        synchronised(By.xpath("//span[text()='Logout']"),logoutButton);
+
         return logoutButton;
     }
 

@@ -7,6 +7,8 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.safari.SafariDriver;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
+import java.time.Duration;
+
 public class DriverFactory {
     public WebDriver driver;
 
@@ -36,6 +38,7 @@ public class DriverFactory {
 
         getDriver().manage().deleteAllCookies();
         getDriver().manage().window().maximize();
+        getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
         return getDriver();
 
     }

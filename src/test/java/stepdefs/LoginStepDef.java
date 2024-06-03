@@ -4,6 +4,7 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.FlightFinder.pages.AlertElements;
 import org.FlightFinder.pages.LoginPage;
 import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
@@ -13,11 +14,12 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import utilities.ConfigReader;
 import utilities.DriverFactory;
 
+import java.io.IOException;
 import java.time.Duration;
 
 public class LoginStepDef  {
 
-    private LoginPage loginPage;
+    private LoginPage elements;
     private WebDriverWait wait;
     private ConfigReader configReader;
     WebDriver driver = DriverFactory.getDriver();
@@ -25,41 +27,47 @@ public class LoginStepDef  {
     @Given("user is on login page")
     public void user_is_on_login_page() throws Throwable {
         configReader = new ConfigReader();
+        elements = new LoginPage(driver);
         try{driver.get(configReader.readFromPropertyFile("url"));}
         catch (WebDriverException e) {}
-        loginPage = new LoginPage(driver);
-        loginPage.getAcceptCookies().click();
-        loginPage.getSignInLink().click();
+        try{
+            elements.getAcceptCookies().click();}
+        catch(WebDriverException e) {
+            elements.getAcceptCookies().click();
+        }
+        elements.getSignInLink().click();
     }
 
-    @When("user enters username {string}")
-    public void user_enters_username(String string) {
-        loginPage.getEmailTextField().sendKeys("strokenavior@gmail.com");
+    @When("user enters username")
+    public void user_enters_username() throws IOException {
+        elements.getEmailTextField().sendKeys(configReader.readFromPropertyFile("email"));
     }
-    @And("user enters password {string}")
-    public void user_enters_password(String string) {
-        loginPage.getPasswordTextField().sendKeys("Password@123");
+    @And("user enters password")
+    public void user_enters_password() throws IOException {
+        elements.getPasswordTextField().sendKeys(configReader.readFromPropertyFile("pass"));
     }
+
     @And("user clicks on Login button")
     public void user_clicks_on_login_button() {
-        loginPage.getSignInButton().click();
+        elements.getSignInButton().click();
     }
 
-    @Then("page title should be {string}")
-    public void page_title_should_be(String string) {
+    @Then("verify the page title")
+    public void page_title_should_be() {
         wait = new WebDriverWait(driver,Duration.ofSeconds(30));
-        wait.until(ExpectedConditions.titleIs("Easily Find Reward Flight Availability: Redeem British Airways Avios Points"));
-        Assert.assertEquals(string,driver.getTitle());
+        String title = "Easily Find Reward Flight Availability: Redeem British Airways Avios Points";
+        wait.until(ExpectedConditions.titleIs(title));
+        Assert.assertEquals(title,driver.getTitle());
     }
 
     @And("user clicks on account button")
     public void user_clicks_on_account_button() {
-        loginPage.getAccountButton().click();
+        elements.getAccountButton().click();
     }
 
     @Then("user clicks on logout button")
     public void user_clicks_on_logout_button() {
-        loginPage.getLogoutButton().click();
+        elements.getLogoutButton().click();
     }
 
 }
