@@ -10,7 +10,6 @@ Feature: Alert Management
     And should be able to logout successfully
 
 
-
   Scenario: Edit Alert in Production Environment
     Given navigate to the application URL
     And accept cookies

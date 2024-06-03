@@ -30,7 +30,7 @@
 
         <!-- report name - displayed at top-nav -->
         <reportName>
-            Test Automation Report
+            RFF Test Automation Report
         </reportName>
 
         <!-- timestamp format -->
